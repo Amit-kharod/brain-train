@@ -1,3 +1,4 @@
+import CalculationTraining from "./components/CalculationTraining";
 import { Home } from "./components/Home";
 import { Navbar } from "./components/Navbar";
 import { CalculationSetting } from "./components/settings/CalculationSetting";
@@ -14,6 +15,7 @@ function App() {
         <Route path="/calculation-setting" element={<CalculationSetting />} />
         <Route path="/table-setting" element={<TableSetting />} />
         <Route path="/square-setting" element={<SquareSetting />} />
+        <Route path="/calculation-training" element={<CalculationTraining />} />
       </Routes>
     </>
   );
