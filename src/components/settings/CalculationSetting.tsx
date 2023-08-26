@@ -1,9 +1,9 @@
-import Heading from "../Heading";
-import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
-import { Button } from "../ui/button";
+import Heading from '../Heading';
+import * as z from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { Button } from '../ui/button';
 import {
   Form,
   FormControl,
@@ -12,8 +12,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form";
-import { Input } from "../ui/input";
+} from '../ui/form';
+import { Input } from '../ui/input';
 import {
   Select,
   SelectContent,
@@ -22,34 +22,38 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "../ui/select";
+} from '../ui/select';
+import { useCalculationSettings } from '../../utils/hooks/useCalculationSettings';
 
 export const CalculationSetting = () => {
-  const form = useForm();
   const navigate = useNavigate();
+  const settings = useCalculationSettings((state) => state.settings);
+  const setSettings = useCalculationSettings((state) => state.setSettings);
+  console.log(settings);
+
   const formSchema = z.object({
-    rangefrom: z.number().min(0).max(100000),
-    rangeto: z.number().min(0).max(100000),
     sets: z.string(),
     values: z.string(),
+    rangefrom: z.string(),
+    rangeto: z.string(),
     operators: z.string(),
   });
 
-  function ProfileForm() {
-    const form = useForm<z.infer<typeof formSchema>>({
-      resolver: zodResolver(formSchema),
-      defaultValues: {
-        sets: "5",
-        values: "5",
-        rangefrom: 0,
-        rangeto: 1000,
-        operators: "1",
-      },
-    });
-  }
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {},
+  });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+    const newSettings = {
+      sets: Number(values.sets),
+      values: Number(values.values),
+      rangefrom: Number(values.rangefrom),
+      rangeto: Number(values.rangeto),
+      operators: values.operators,
+    };
+    setSettings(newSettings);
+    navigate('/calculation-training');
   }
 
   return (
@@ -58,7 +62,7 @@ export const CalculationSetting = () => {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="grid grid-cols-4 items-end gap-2 px-36"
+          className="grid grid-cols-5 items-end gap-2 px-16"
         >
           <FormField
             control={form.control}
@@ -122,7 +126,7 @@ export const CalculationSetting = () => {
               </FormItem>
             )}
           />
-          <div className="flex items-end gap-1 mb-[3px]">
+          <div className="flex col-span-2 items-end gap-1 mb-[3px]">
             <FormField
               control={form.control}
               name="rangefrom"
@@ -131,6 +135,9 @@ export const CalculationSetting = () => {
                   <FormLabel>Range</FormLabel>
                   <FormControl>
                     <Input
+                      type="number"
+                      min={0}
+                      max={100000}
                       placeholder="from"
                       {...field}
                       className="text-black"
@@ -147,6 +154,9 @@ export const CalculationSetting = () => {
                 <FormItem className="!mt-2">
                   <FormControl>
                     <Input
+                      type="number"
+                      min={0}
+                      max={100000}
                       placeholder="to"
                       {...field}
                       className="text-black"
@@ -173,20 +183,22 @@ export const CalculationSetting = () => {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="1">+</SelectItem>
-                    <SelectItem value="2">-</SelectItem>
-                    <SelectItem value="3">*</SelectItem>
-                    <SelectItem value="4">/</SelectItem>
-                    <SelectItem value="5">+ -</SelectItem>
-                    <SelectItem value="6">* /</SelectItem>
-                    <SelectItem value="7">+ - *</SelectItem>
-                    <SelectItem value="8">+ - * /</SelectItem>
+                    <SelectItem value="+">+</SelectItem>
+                    <SelectItem value="-">-</SelectItem>
+                    <SelectItem value="*">*</SelectItem>
+                    <SelectItem value="/">/</SelectItem>
+                    <SelectItem value="+-">+ -</SelectItem>
+                    <SelectItem value="*/">* /</SelectItem>
+                    <SelectItem value="+-*">+ - *</SelectItem>
+                    <SelectItem value="+-*/">+ - * /</SelectItem>
                   </SelectContent>
                 </Select>
               </FormItem>
             )}
           />
-          <Button type="submit">Start Training</Button>
+          <Button type="submit" className="col-span-5" variant={'secondary'}>
+            Start Training
+          </Button>
         </form>
       </Form>
     </section>
