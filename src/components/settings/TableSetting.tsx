@@ -1,7 +1,7 @@
 import Heading from "../Heading";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Button } from "../ui/button";
 import {
@@ -14,33 +14,29 @@ import {
   FormMessage,
 } from "../ui/form";
 import { Input } from "../ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "../ui/select";
+import { useTableSettings } from "../../utils/hooks/useCalculationSettings";
 
 export const TableSetting = () => {
-  const form = useForm();
+  const settings = useTableSettings((state) => state.settings);
+  const setSettings = useTableSettings((state) => state.setSettings);
   const formSchema = z.object({
-    username: z.string().min(2).max(50),
+    firstValueRange: z.string(),
+    secondValueRange: z.string(),
+  });
+  const navigate = useNavigate();
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {},
   });
 
-  function ProfileForm() {
-    const form = useForm<z.infer<typeof formSchema>>({
-      resolver: zodResolver(formSchema),
-      defaultValues: {
-        username: "",
-      },
-    });
-  }
-
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+    const newSettings = {
+      fistValueRange: values.firstValueRange,
+      secondValueRange: values.secondValueRange,
+    };
+    setSettings(newSettings);
+    navigate("/table-training");
   }
 
   return (
@@ -54,14 +50,30 @@ export const TableSetting = () => {
           <div className="flex col-span-4 items-end gap-1 mb-[3px]">
             <FormField
               control={form.control}
-              name="rangefrom"
+              name="firstValueRange"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Enter Table Range(Using commas or dash)</FormLabel>
+                  <FormLabel>First value range</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="from"
-                      className="w-[600px]"
+                      placeholder="eg. 1-10, 90-100, 150"
+                      className="w-[600px] text-black"
+                      {...field}
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="secondValueRange"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Second value range</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="eg. 1-10, 90-100, 150"
+                      className="w-[600px] text-black"
                       {...field}
                     />
                   </FormControl>

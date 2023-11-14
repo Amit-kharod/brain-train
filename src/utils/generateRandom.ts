@@ -63,4 +63,90 @@ export const randomCalculation = (
   return problems;
 };
 
+export const randomTables = (
+  fistValueRange: string,
+  secondValueRange: string
+) => {
+  const problems = [];
+
+  for (let i = 0; i < 5; i++) {
+    const problem: {
+      nums: number[];
+      operators: string[];
+      answer: number | null;
+      expression: string;
+      options: number[];
+    } = {
+      nums: [],
+      operators: [],
+      answer: null,
+      expression: "",
+      options: [],
+    };
+    let randomValues: any = [];
+    fistValueRange.split(",").map((val) => {
+      if (val.split("-").length < 2) {
+        randomValues.push(val);
+      } else {
+        let rangefrom = 0;
+        let rangeto = 0;
+        val.split("-").map((item, i) => {
+          if (i == 0) {
+            rangefrom = Number(item);
+          } else {
+            rangeto = Number(item);
+          }
+        });
+        randomValues.push(
+          rangefrom + Math.floor((rangeto - rangefrom) * Math.random())
+        );
+      }
+    });
+    problem.nums.push(
+      randomValues[Math.floor(randomValues.length * Math.random())]
+    );
+    problem.operators.push("*");
+    randomValues = [];
+    secondValueRange.split(",").map((val) => {
+      if (val.split("-").length < 2) {
+        randomValues.push(val);
+      } else {
+        let rangefrom = 0;
+        let rangeto = 0;
+        val.split("-").map((item, i) => {
+          if (i == 0) {
+            rangefrom = Number(item);
+          } else {
+            rangeto = Number(item);
+          }
+        });
+        randomValues.push(
+          rangefrom + Math.floor((rangeto - rangefrom) * Math.random())
+        );
+      }
+    });
+    problem.nums.push(
+      randomValues[Math.floor(randomValues.length * Math.random())]
+    );
+    problem.expression =
+      problem.nums[0] + problem.operators[0] + problem.nums[1];
+    problem.answer = Math.round(eval(problem.expression) * 100) / 100;
+
+    let o = new Set<number>();
+    for (let j = 0; j < 10; j++) {
+      o.add(problem.answer + (-5 + Math.floor(10 * Math.random())));
+      if (o.size > 3) {
+        problem.options = [...o];
+        break;
+      }
+    }
+
+    if (!problem.options.includes(problem.answer)) {
+      problem.options[Math.floor(4 * Math.random())] = problem.answer;
+    }
+    problems.push(problem);
+  }
+  return problems;
+};
+
 console.log(randomCalculation(5, 5, 1000, 9999, ["-", "+"]));

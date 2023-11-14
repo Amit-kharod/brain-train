@@ -1,6 +1,6 @@
-import { create } from 'zustand';
+import { create } from "zustand";
 
-interface settings {
+interface CalculationSettings {
   sets: number;
   values: number;
   rangefrom: number;
@@ -8,18 +8,62 @@ interface settings {
   operators: string;
 }
 
-interface CalculationSettings {
-  settings: settings;
-  setSettings: (data: settings) => void;
+interface TableSettings {
+  fistValueRange: string;
+  secondValueRange: string;
 }
 
-export const useCalculationSettings = create<CalculationSettings>()((set) => ({
+interface PowerSettings {
+  range: string;
+  powerMethod: "square" | "cube" | "mixed";
+}
+
+interface CalculationSettingsStore {
+  settings: CalculationSettings;
+  setSettings: (data: CalculationSettings) => void;
+}
+
+interface TableSettingsStore {
+  settings: TableSettings;
+  setSettings: (data: TableSettings) => void;
+}
+
+interface PowerSettingsStore {
+  settings: PowerSettings;
+  setSettings: (data: PowerSettings) => void;
+}
+
+export const useCalculationSettings = create<CalculationSettingsStore>()(
+  (set) => ({
+    settings: {
+      sets: 5,
+      values: 5,
+      rangefrom: 0,
+      rangeto: 100,
+      operators: "+",
+    },
+    setSettings: (data) =>
+      set(() => ({
+        settings: data,
+      })),
+  })
+);
+
+export const useTableSettings = create<TableSettingsStore>()((set) => ({
   settings: {
-    sets: 5,
-    values: 5,
-    rangefrom: 0,
-    rangeto: 100,
-    operators: '+',
+    fistValueRange: "1-100",
+    secondValueRange: "200",
+  },
+  setSettings: (data) =>
+    set(() => ({
+      settings: data,
+    })),
+}));
+
+export const usePowerSettings = create<PowerSettingsStore>()((set) => ({
+  settings: {
+    range: "1-20",
+    powerMethod: "square",
   },
   setSettings: (data) =>
     set(() => ({

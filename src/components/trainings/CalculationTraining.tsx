@@ -1,8 +1,8 @@
-import { useCalculationSettings } from "../utils/hooks/useCalculationSettings";
-import { randomCalculation } from "../utils/generateRandom";
-import Heading from "./Heading";
+import { useCalculationSettings } from "../../utils/hooks/useCalculationSettings";
+import { randomCalculation } from "../../utils/generateRandom";
+import Heading from "../Heading";
 import * as z from "zod";
-import { Button } from "../components/ui/button";
+import { Button } from "../ui/button";
 import { Check, Flame, RotateCcw, X } from "lucide-react";
 
 import {
@@ -13,7 +13,7 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "../components/ui/select";
+} from "../ui/select";
 import { useEffect, useState } from "react";
 
 function CalculationTraining() {
