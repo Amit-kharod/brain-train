@@ -1,5 +1,3 @@
-import { eventNames } from 'process';
-
 export const randomCalculation = (
   sets: number,
   values: number,
@@ -20,11 +18,11 @@ export const randomCalculation = (
       nums: [],
       operators: [],
       answer: null,
-      expression: '',
+      expression: "",
       options: [],
     };
 
-    let evaluation = '';
+    let evaluation = "";
 
     for (let j = 0; j < values - 1; j++) {
       problem.operators.push(
@@ -38,7 +36,7 @@ export const randomCalculation = (
     }
 
     for (let j = 0; j < values; j++) {
-      evaluation += ' ' + problem.nums[j] + ' ';
+      evaluation += " " + problem.nums[j] + " ";
       if (j != values - 1) {
         evaluation += problem.operators[j];
       }
@@ -65,4 +63,4 @@ export const randomCalculation = (
   return problems;
 };
 
-console.log(randomCalculation(5, 5, 1000, 9999, ['-', '+']));
+console.log(randomCalculation(5, 5, 1000, 9999, ["-", "+"]));
