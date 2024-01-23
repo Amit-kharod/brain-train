@@ -36,7 +36,7 @@ function CalculationTraining() {
   return (
     <div className="flex flex-col items-center p-8">
       <Heading>Calculation Training</Heading>
-      <div className="flex">
+      <div className="flex ">
         <div className="flex flex-col gap-2">
           {problems.map((problem, i) => {
             return (

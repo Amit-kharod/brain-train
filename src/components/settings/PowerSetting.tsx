@@ -45,19 +45,19 @@ export const PowerSetting = () => {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="grid grid-cols-4 items-end gap-2 px-36"
+          className="flex flex-col gap-2 lg:gap-10 px-36"
         >
-          <div className="flex col-span-4 items-end gap-1 mb-[3px]">
+          <div className="flex flex-col lg:flex-row gap-1 mb-[3px]">
             <FormField
               control={form.control}
               name="range"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Value range</FormLabel>
-                  <FormControl>
+                  <FormControl className="w-[80vw] lg:w-[30vw]">
                     <Input
                       placeholder="eg. 1-10, 90-100, 150"
-                      className="w-[600px] text-black"
+                      className=" text-black"
                       {...field}
                     />
                   </FormControl>
@@ -74,7 +74,7 @@ export const PowerSetting = () => {
                     onValueChange={field.onChange}
                     defaultValue={field.value}
                   >
-                    <FormControl>
+                    <FormControl className="w-[80vw] lg:w-[30vw]">
                       <SelectTrigger>
                         <SelectValue placeholder="Select" />
                       </SelectTrigger>

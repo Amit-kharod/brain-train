@@ -1,25 +1,19 @@
-import Heading from '../Heading';
-import * as z from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useNavigate } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
-import { Button } from '../ui/button';
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-} from '../ui/form';
-import { Input } from '../ui/input';
+import Heading from "../Heading";
+import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { Button } from "../ui/button";
+import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
+import { Input } from "../ui/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '../ui/select';
-import { useCalculationSettings } from '../../utils/hooks/useCalculationSettings';
+} from "../ui/select";
+import { useCalculationSettings } from "../../utils/hooks/useCalculationSettings";
 
 export const CalculationSetting = () => {
   const navigate = useNavigate();
@@ -49,7 +43,7 @@ export const CalculationSetting = () => {
       operators: values.operators,
     };
     setSettings(newSettings);
-    navigate('/calculation-training');
+    navigate("/calculation-training");
   }
 
   return (
@@ -58,7 +52,7 @@ export const CalculationSetting = () => {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="grid grid-cols-5 items-end gap-2 px-16"
+          className="flex flex-col justify-center items-center lg:grid lg:grid-cols-5 lg:items-end gap-2 px-16"
         >
           <FormField
             control={form.control}
@@ -70,7 +64,7 @@ export const CalculationSetting = () => {
                   onValueChange={field.onChange}
                   defaultValue={field.value}
                 >
-                  <FormControl>
+                  <FormControl className="w-[80vw] lg:w-full ">
                     <SelectTrigger>
                       <SelectValue placeholder="Select" />
                     </SelectTrigger>
@@ -96,7 +90,7 @@ export const CalculationSetting = () => {
                   onValueChange={field.onChange}
                   defaultValue={field.value}
                 >
-                  <FormControl>
+                  <FormControl className="w-[80vw] lg:w-full">
                     <SelectTrigger>
                       <SelectValue placeholder="Select" />
                     </SelectTrigger>
@@ -124,7 +118,7 @@ export const CalculationSetting = () => {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Range</FormLabel>
-                  <FormControl>
+                  <FormControl className="w-[40vw] lg:w-full">
                     <Input
                       type="number"
                       min={0}
@@ -143,7 +137,7 @@ export const CalculationSetting = () => {
               name="rangeto"
               render={({ field }) => (
                 <FormItem className="!mt-2">
-                  <FormControl>
+                  <FormControl className="w-[40vw] lg:w-full">
                     <Input
                       type="number"
                       min={0}
@@ -168,7 +162,7 @@ export const CalculationSetting = () => {
                   onValueChange={field.onChange}
                   defaultValue={field.value}
                 >
-                  <FormControl>
+                  <FormControl className="w-[80vw] lg:w-full">
                     <SelectTrigger>
                       <SelectValue placeholder="Select" />
                     </SelectTrigger>
@@ -187,7 +181,7 @@ export const CalculationSetting = () => {
               </FormItem>
             )}
           />
-          <Button type="submit" className="col-span-5" variant={'secondary'}>
+          <Button type="submit" className="col-span-5" variant={"secondary"}>
             Start Training
           </Button>
         </form>

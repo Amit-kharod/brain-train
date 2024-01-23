@@ -4,13 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Button } from "../ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-} from "../ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
 import { Input } from "../ui/input";
 import { useTableSettings } from "../../utils/hooks/useCalculationSettings";
 
@@ -43,19 +37,19 @@ export const TableSetting = () => {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="grid grid-cols-4 items-end gap-2 px-36"
+          className="flex flex-col gap-2 lg:gap-10"
         >
-          <div className="flex col-span-4 items-end gap-1 mb-[3px]">
+          <div className="flex flex-col lg:flex-row gap-1 mb-[3px]">
             <FormField
               control={form.control}
               name="firstValueRange"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>First value range</FormLabel>
-                  <FormControl>
+                  <FormControl className="w-[80vw] lg:w-[30vw]">
                     <Input
                       placeholder="eg. 1-10, 90-100, 150"
-                      className="w-[600px] text-black"
+                      className="text-black"
                       {...field}
                     />
                   </FormControl>
@@ -68,10 +62,10 @@ export const TableSetting = () => {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Second value range</FormLabel>
-                  <FormControl>
+                  <FormControl className="w-[80vw] lg:w-[30vw]">
                     <Input
                       placeholder="eg. 1-10, 90-100, 150"
-                      className="w-[600px] text-black"
+                      className="text-black"
                       {...field}
                     />
                   </FormControl>
@@ -79,7 +73,7 @@ export const TableSetting = () => {
               )}
             />
           </div>
-          <Button className="bg-red-500 col-span-4" type="submit">
+          <Button className="bg-red-500 col-span-4 w-full" type="submit">
             Start Training
           </Button>
         </form>
