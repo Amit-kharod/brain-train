@@ -15,7 +15,7 @@ interface TableSettings {
 
 interface PowerSettings {
   range: string;
-  powerMethod: "square" | "cube" | "mixed";
+  powerMethod: string;
 }
 
 interface CalculationSettingsStore {

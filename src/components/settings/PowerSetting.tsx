@@ -4,22 +4,24 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Button } from "../ui/button";
+import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
 import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-} from "../ui/form";
-import { Input } from "../ui/input";
-import { useTableSettings } from "../../utils/hooks/useCalculationSettings";
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
 
-export const TableSetting = () => {
-  // const settings = useTableSettings((state) => state.settings);
-  const setSettings = useTableSettings((state) => state.setSettings);
+import { Input } from "../ui/input";
+import { usePowerSettings } from "../../utils/hooks/useCalculationSettings";
+
+export const PowerSetting = () => {
+  // const settings = usePowerSettings((state) => state.settings);
+  const setSettings = usePowerSettings((state) => state.setSettings);
   const formSchema = z.object({
-    firstValueRange: z.string(),
-    secondValueRange: z.string(),
+    range: z.string(),
+    powerMethod: z.string(),
   });
   const navigate = useNavigate();
 
@@ -30,16 +32,16 @@ export const TableSetting = () => {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     const newSettings = {
-      fistValueRange: values.firstValueRange,
-      secondValueRange: values.secondValueRange,
+      range: values.range,
+      powerMethod: values.powerMethod,
     };
     setSettings(newSettings);
-    navigate("/table-training");
+    navigate("/power-training");
   }
 
   return (
     <section className="flex flex-col gap-6 items-center w-full justify-center pt-16 ">
-      <Heading>Table Training</Heading>
+      <Heading>Power Training</Heading>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -48,10 +50,10 @@ export const TableSetting = () => {
           <div className="flex col-span-4 items-end gap-1 mb-[3px]">
             <FormField
               control={form.control}
-              name="firstValueRange"
+              name="range"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>First value range</FormLabel>
+                  <FormLabel>Value range</FormLabel>
                   <FormControl>
                     <Input
                       placeholder="eg. 1-10, 90-100, 150"
@@ -64,17 +66,25 @@ export const TableSetting = () => {
             />
             <FormField
               control={form.control}
-              name="secondValueRange"
+              name="powerMethod"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Second value range</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="eg. 1-10, 90-100, 150"
-                      className="w-[600px] text-black"
-                      {...field}
-                    />
-                  </FormControl>
+                  <FormLabel>Power Method</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="square">Square</SelectItem>
+                      <SelectItem value="cube">Cube</SelectItem>
+                      <SelectItem value="Square/Cube">Square/Cube</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </FormItem>
               )}
             />

@@ -1,16 +1,14 @@
 import { useCalculationSettings } from "../../utils/hooks/useCalculationSettings";
 import { randomCalculation } from "../../utils/generateRandom";
 import Heading from "../Heading";
-import * as z from "zod";
 import { Button } from "../ui/button";
-import { Check, Flame, RotateCcw, X } from "lucide-react";
+import { Check, RotateCcw, X } from "lucide-react";
 
 import {
   Select,
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
@@ -58,7 +56,7 @@ function CalculationTraining() {
                     </SelectTrigger>
                     <SelectContent>
                       <SelectGroup>
-                        {problem.options.map((option, i) => (
+                        {problem.options.map((option) => (
                           <SelectItem value={`${option}`}>{option}</SelectItem>
                         ))}
                       </SelectGroup>

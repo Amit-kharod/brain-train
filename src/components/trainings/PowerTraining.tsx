@@ -1,5 +1,5 @@
-import { useTableSettings } from "../../utils/hooks/useCalculationSettings";
-import { randomTables } from "../../utils/generateRandom";
+import { usePowerSettings } from "../../utils/hooks/useCalculationSettings";
+import { randomPower } from "../../utils/generateRandom";
 import Heading from "../Heading";
 import { Button } from "../ui/button";
 import { Check, RotateCcw, X } from "lucide-react";
@@ -14,12 +14,10 @@ import {
 } from "../ui/select";
 import { useEffect, useState } from "react";
 
-function TableTraining() {
-  const settings = useTableSettings((state) => state.settings);
-  const { fistValueRange, secondValueRange } = settings;
-  const [problems, setProblems] = useState(
-    randomTables(fistValueRange, secondValueRange)
-  );
+function PowerTraining() {
+  const settings = usePowerSettings((state) => state.settings);
+  const { range, powerMethod } = settings;
+  const [problems, setProblems] = useState(randomPower(range, powerMethod));
   const [isAnswersCorrect, setIsAnswersCorrect] = useState<any[]>(
     new Array(problems.length)
   );
@@ -38,15 +36,18 @@ function TableTraining() {
 
   return (
     <div className="flex flex-col items-center p-8">
-      <Heading>Table Training</Heading>
+      <Heading>Power Training</Heading>
       {refresh && (
         <>
-          <div className="flex">
+          <div className="flex my-4">
             <div className="flex flex-col gap-2">
               {problems.map((problem, i) => {
                 return (
-                  <div key={i}>
-                    <div>{problem.expression}</div>
+                  <div key={i} className="flex gap-4">
+                    <div>
+                      {problem.num}
+                      <sup>{problem.power}</sup>
+                    </div>
                     <div className="flex items-center">
                       <Select
                         onValueChange={(v) => {
@@ -87,7 +88,7 @@ function TableTraining() {
             </Button>
             <Button
               onClick={() => {
-                setProblems(randomTables(fistValueRange, secondValueRange));
+                setProblems(randomPower(range, powerMethod));
                 setIsSubmit(false);
                 isAnswersCorrect?.fill(false);
                 setRefresh(false);
@@ -103,4 +104,4 @@ function TableTraining() {
   );
 }
 
-export default TableTraining;
+export default PowerTraining;

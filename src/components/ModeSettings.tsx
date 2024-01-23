@@ -32,7 +32,7 @@ export const ModeSettings = () => {
         <SelectContent>
           <SelectItem value="calculation">Calculation</SelectItem>
           <SelectItem value="table">Table</SelectItem>
-          <SelectItem value="square">Square/Cube</SelectItem>
+          <SelectItem value="power">Square/Cube</SelectItem>
         </SelectContent>
       </Select>
       <Button onClick={modeHandler} className="bg-blue-700">
