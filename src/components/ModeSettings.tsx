@@ -31,6 +31,7 @@ export const ModeSettings = () => {
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="calculation">Calculation</SelectItem>
+          <SelectItem value="dual-calculation">Dual Calculation</SelectItem>
           <SelectItem value="table">Table</SelectItem>
           <SelectItem value="power">Square/Cube</SelectItem>
         </SelectContent>

@@ -39,9 +39,10 @@ function CalculationTraining() {
       <div className="flex ">
         <div className="flex flex-col gap-2">
           {problems.map((problem, i) => {
+
             return (
-              <div key={i}>
-                <div>{problem.expression}</div>
+              <div key={i} className="flex flex-col items-center">
+                <div>{problem.expression.replace(/\//g, "÷").replace(/\*/g, "x")}</div>
                 <div className="flex items-center">
                   <Select
                     onValueChange={(v) => {
@@ -71,9 +72,6 @@ function CalculationTraining() {
         </div>
       </div>
       <div className="flex gap-2 my-5">
-        <Button className="bg-[#4c913b]" onClick={() => setIsSubmit(true)}>
-          Submit
-        </Button>
         <Button
           onClick={() => {
             setProblems(
@@ -86,6 +84,9 @@ function CalculationTraining() {
         >
           <RotateCcw />
           Refresh
+        </Button>
+        <Button className="bg-[#4c913b]" onClick={() => setIsSubmit(true)}>
+          Submit
         </Button>
       </div>
     </div>

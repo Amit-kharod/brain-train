@@ -1,3 +1,5 @@
+import { fraction } from "mathjs";
+
 export const randomCalculation = (
   sets: number,
   values: number,
@@ -63,9 +65,10 @@ export const randomCalculation = (
   return problems;
 };
 
-export const randomTables = (
+export const dualRangeCalculation = (
   fistValueRange: string,
-  secondValueRange: string
+  secondValueRange: string,
+  operator: string
 ) => {
   const problems = [];
 
@@ -73,9 +76,9 @@ export const randomTables = (
     const problem: {
       nums: number[];
       operators: string[];
-      answer: number | null;
+      answer: number | null | string;
       expression: string;
-      options: number[];
+      options: (number | string)[];
     } = {
       nums: [],
       operators: [],
@@ -97,15 +100,16 @@ export const randomTables = (
             rangeto = Number(item);
           }
         });
-        randomValues.push(
-          rangefrom + Math.floor((rangeto - rangefrom) * Math.random())
-        );
+
+        for (let j = 0; j <= rangeto - rangefrom; j++) {
+          randomValues.push(rangefrom + j);
+        }
       }
     });
     problem.nums.push(
       randomValues[Math.floor(randomValues.length * Math.random())]
     );
-    problem.operators.push("*");
+    problem.operators.push(operator);
     randomValues = [];
     secondValueRange.split(",").map((val) => {
       if (val.split("-").length < 2) {
@@ -120,30 +124,53 @@ export const randomTables = (
             rangeto = Number(item);
           }
         });
-        randomValues.push(
-          rangefrom + Math.floor((rangeto - rangefrom) * Math.random())
-        );
+
+        for (let j = 0; j <= rangeto - rangefrom; j++) {
+          randomValues.push(rangefrom + j);
+        }
       }
     });
     problem.nums.push(
       randomValues[Math.floor(randomValues.length * Math.random())]
     );
+
     problem.expression =
       problem.nums[0] + problem.operators[0] + problem.nums[1];
-    problem.answer = Math.round(eval(problem.expression) * 100) / 100;
+    if (operator === "/") {
+      const { n, d } = fraction(problem.nums[0], problem.nums[1]);
+      problem.answer = n + "/" + d;
 
-    let o = new Set<number>();
-    for (let j = 0; j < 10; j++) {
-      o.add(problem.answer + (-5 + Math.floor(10 * Math.random())));
-      if (o.size > 3) {
-        problem.options = [...o];
-        break;
+      //generating random options
+      let o = new Set<string>();
+      for (let j = 0; j < 10; j++) {
+        o.add(n + (-5 + Math.floor(10 * Math.random())) + "/" + d);
+        if (o.size > 3) {
+          problem.options = [...o];
+          break;
+        }
+      }
+
+      if (!problem.options.includes(problem.answer)) {
+        problem.options[Math.floor(4 * Math.random())] = problem.answer;
+      }
+    } else {
+      problem.answer = Math.round(eval(problem.expression) * 100) / 100;
+
+      //generating random options
+      let o = new Set<number>();
+      for (let j = 0; j < 10; j++) {
+        o.add(problem.answer + (-5 + Math.floor(10 * Math.random())));
+        if (o.size > 3) {
+          problem.options = [...o];
+          break;
+        }
+      }
+
+      if (!problem.options.includes(problem.answer)) {
+        problem.options[Math.floor(4 * Math.random())] = problem.answer;
       }
     }
 
-    if (!problem.options.includes(problem.answer)) {
-      problem.options[Math.floor(4 * Math.random())] = problem.answer;
-    }
     problems.push(problem);
   }
   return problems;

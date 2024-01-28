@@ -170,12 +170,13 @@ export const CalculationSetting = () => {
                   <SelectContent>
                     <SelectItem value="+">+</SelectItem>
                     <SelectItem value="-">-</SelectItem>
-                    <SelectItem value="*">*</SelectItem>
+                    <SelectItem value="*">x</SelectItem>
                     <SelectItem value="/">/</SelectItem>
                     <SelectItem value="+-">+ -</SelectItem>
-                    <SelectItem value="*/">* /</SelectItem>
-                    <SelectItem value="+-*">+ - *</SelectItem>
-                    <SelectItem value="+-*/">+ - * /</SelectItem>
+                    <SelectItem value="+*">+ x</SelectItem>
+                    <SelectItem value="*/">x /</SelectItem>
+                    <SelectItem value="+-*">+ - x</SelectItem>
+                    <SelectItem value="+-*/">+ - x /</SelectItem>
                   </SelectContent>
                 </Select>
               </FormItem>

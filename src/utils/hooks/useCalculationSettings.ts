@@ -8,6 +8,12 @@ interface CalculationSettings {
   operators: string;
 }
 
+interface DualCalculationSettings {
+  fistValueRange: string;
+  secondValueRange: string;
+  operator: string;
+}
+
 interface TableSettings {
   fistValueRange: string;
   secondValueRange: string;
@@ -21,6 +27,11 @@ interface PowerSettings {
 interface CalculationSettingsStore {
   settings: CalculationSettings;
   setSettings: (data: CalculationSettings) => void;
+}
+
+interface DualCalculationSettingsStore {
+  settings: DualCalculationSettings;
+  setSettings: (data: DualCalculationSettings) => void;
 }
 
 interface TableSettingsStore {
@@ -48,6 +59,19 @@ export const useCalculationSettings = create<CalculationSettingsStore>()(
       })),
   })
 );
+
+export const useDualCalculationSettings =
+  create<DualCalculationSettingsStore>()((set) => ({
+    settings: {
+      fistValueRange: "1-100",
+      secondValueRange: "1-100",
+      operator: "-",
+    },
+    setSettings: (data) =>
+      set(() => ({
+        settings: data,
+      })),
+  }));
 
 export const useTableSettings = create<TableSettingsStore>()((set) => ({
   settings: {

@@ -1,4 +1,4 @@
-import { useTableSettings } from "../../utils/hooks/useCalculationSettings";
+import { useDualCalculationSettings } from "../../utils/hooks/useCalculationSettings";
 import { dualRangeCalculation } from "../../utils/generateRandom";
 import Heading from "../Heading";
 import { Button } from "../ui/button";
@@ -14,11 +14,11 @@ import {
 } from "../ui/select";
 import { useEffect, useState } from "react";
 
-function TableTraining() {
-  const settings = useTableSettings((state) => state.settings);
-  const { fistValueRange, secondValueRange } = settings;
+function DualCalculationTraining() {
+  const settings = useDualCalculationSettings((state) => state.settings);
+  const { fistValueRange, secondValueRange, operator } = settings;
   const [problems, setProblems] = useState(
-    dualRangeCalculation(fistValueRange, secondValueRange, "*")
+    dualRangeCalculation(fistValueRange, secondValueRange, operator)
   );
   const [isAnswersCorrect, setIsAnswersCorrect] = useState<any[]>(
     new Array(problems.length)
@@ -38,7 +38,7 @@ function TableTraining() {
 
   return (
     <div className="flex flex-col items-center p-8">
-      <Heading>Table Training</Heading>
+      <Heading>Dual Calculation Training</Heading>
       {refresh && (
         <>
           <div className="flex">
@@ -46,11 +46,7 @@ function TableTraining() {
               {problems.map((problem, i) => {
                 return (
                   <div key={i}>
-                    <div>
-                      {problem.expression
-                        .replace(/\//g, "÷")
-                        .replace(/\*/g, "x")}
-                    </div>
+                    <div>{problem.expression.replace(/\//g, "÷").replace(/\*/g, "x")}</div>
                     <div className="flex items-center">
                       <Select
                         onValueChange={(v) => {
@@ -89,7 +85,11 @@ function TableTraining() {
             <Button
               onClick={() => {
                 setProblems(
-                  dualRangeCalculation(fistValueRange, secondValueRange, "*")
+                  dualRangeCalculation(
+                    fistValueRange,
+                    secondValueRange,
+                    operator
+                  )
                 );
                 setIsSubmit(false);
                 isAnswersCorrect?.fill(false);
@@ -109,4 +109,4 @@ function TableTraining() {
   );
 }
 
-export default TableTraining;
+export default DualCalculationTraining;

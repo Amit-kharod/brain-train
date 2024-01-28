@@ -83,9 +83,6 @@ function PowerTraining() {
             </div>
           </div>
           <div className="flex gap-2 my-5">
-            <Button className="bg-[#4c913b]" onClick={() => setIsSubmit(true)}>
-              Submit
-            </Button>
             <Button
               onClick={() => {
                 setProblems(randomPower(range, powerMethod));
@@ -96,6 +93,9 @@ function PowerTraining() {
             >
               <RotateCcw />
               Refresh
+            </Button>
+            <Button className="bg-[#4c913b]" onClick={() => setIsSubmit(true)}>
+              Submit
             </Button>
           </div>
         </>

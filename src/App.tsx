@@ -7,6 +7,8 @@ import { TableSetting } from "./components/settings/TableSetting";
 import { Routes, Route } from "react-router-dom";
 import TableTraining from "./components/trainings/TableTraining";
 import PowerTraining from "./components/trainings/PowerTraining";
+import { DualCalculationSetting } from "./components/settings/DualCalculationSetting";
+import DualCalculationTraining from "./components/trainings/DualCalculationTraining";
 
 function App() {
   return (
@@ -17,7 +19,9 @@ function App() {
         <Route path="/calculation-setting" element={<CalculationSetting />} />
         <Route path="/table-setting" element={<TableSetting />} />
         <Route path="/power-setting" element={<PowerSetting />} />
+        <Route path="/dual-calculation-setting" element={<DualCalculationSetting />} />
         <Route path="/calculation-training" element={<CalculationTraining />} />
+        <Route path="/dual-calculation-training" element={<DualCalculationTraining />} />
         <Route path="/table-training" element={<TableTraining />} />
         <Route path="/power-training" element={<PowerTraining />} />
       </Routes>
