@@ -34,6 +34,7 @@ export const PowerSetting = () => {
     const newSettings = {
       range: values.range,
       powerMethod: values.powerMethod,
+      answerType: "number"
     };
     setSettings(newSettings);
     navigate("/power-training");
