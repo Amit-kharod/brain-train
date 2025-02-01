@@ -23,6 +23,7 @@ export const DualCalculationSetting = () => {
     firstValRange: z.string(),
     secondValRange: z.string(),
     operator: z.string(),
+    answerType: z.string(),
   });
   const navigate = useNavigate();
 
@@ -36,6 +37,7 @@ export const DualCalculationSetting = () => {
       fistValueRange: values.firstValRange,
       secondValueRange: values.secondValRange,
       operator: values.operator,
+      answerType: values.answerType,
     };
     setSettings(newSettings);
     navigate("/dual-calculation-training");
@@ -108,6 +110,29 @@ export const DualCalculationSetting = () => {
               )}
             />
           </div>
+          <FormField
+            control={form.control}
+            name="answerType"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Answer Type</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl className="w-[80vw] lg:w-[30vw]">
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select answer type" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="mcq">Multiple Choice</SelectItem>
+                    <SelectItem value="input">Direct Input</SelectItem>
+                  </SelectContent>
+                </Select>
+              </FormItem>
+            )}
+          />
           <Button className="bg-red-500 col-span-4" type="submit">
             Start Training
           </Button>

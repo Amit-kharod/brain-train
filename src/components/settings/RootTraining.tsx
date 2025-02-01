@@ -22,7 +22,6 @@ export const PowerSetting = () => {
   const formSchema = z.object({
     range: z.string(),
     powerMethod: z.string(),
-    answerType: z.string(),
   });
   const navigate = useNavigate();
 
@@ -35,7 +34,6 @@ export const PowerSetting = () => {
     const newSettings = {
       range: values.range,
       powerMethod: values.powerMethod,
-      answerType: values.answerType,
     };
     setSettings(newSettings);
     navigate("/power-training");
@@ -85,40 +83,12 @@ export const PowerSetting = () => {
                       <SelectItem value="square">Square</SelectItem>
                       <SelectItem value="cube">Cube</SelectItem>
                       <SelectItem value="Square/Cube">Square/Cube</SelectItem>
-                      <SelectItem value="squareRoot">Square Root</SelectItem>
-                      <SelectItem value="cubeRoot">Cube Root</SelectItem>
-                      <SelectItem value="bothRoots">
-                        Square/Cube Root
-                      </SelectItem>
                     </SelectContent>
                   </Select>
                 </FormItem>
               )}
             />
           </div>
-          <FormField
-            control={form.control}
-            name="answerType"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Answer Type</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
-                  <FormControl className="w-[80vw] lg:w-[30vw]">
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select answer type" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="mcq">Multiple Choice</SelectItem>
-                    <SelectItem value="input">Direct Input</SelectItem>
-                  </SelectContent>
-                </Select>
-              </FormItem>
-            )}
-          />
           <Button className="bg-red-500 col-span-4" type="submit">
             Start Training
           </Button>

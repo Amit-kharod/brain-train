@@ -6,22 +6,26 @@ interface CalculationSettings {
   rangefrom: number;
   rangeto: number;
   operators: string;
+  answerType: string;
 }
 
 interface DualCalculationSettings {
   fistValueRange: string;
   secondValueRange: string;
   operator: string;
+  answerType: string;
 }
 
 interface TableSettings {
   fistValueRange: string;
   secondValueRange: string;
+  answerType: string;
 }
 
 interface PowerSettings {
   range: string;
   powerMethod: string;
+  answerType: string;
 }
 
 interface CalculationSettingsStore {
@@ -52,6 +56,7 @@ export const useCalculationSettings = create<CalculationSettingsStore>()(
       rangefrom: 0,
       rangeto: 100,
       operators: "+",
+      answerType: "mcq",
     },
     setSettings: (data) =>
       set(() => ({
@@ -66,6 +71,7 @@ export const useDualCalculationSettings =
       fistValueRange: "1-100",
       secondValueRange: "1-100",
       operator: "-",
+      answerType: "mcq",
     },
     setSettings: (data) =>
       set(() => ({
@@ -77,6 +83,7 @@ export const useTableSettings = create<TableSettingsStore>()((set) => ({
   settings: {
     fistValueRange: "1-100",
     secondValueRange: "200",
+    answerType: "mcq",
   },
   setSettings: (data) =>
     set(() => ({
@@ -88,6 +95,7 @@ export const usePowerSettings = create<PowerSettingsStore>()((set) => ({
   settings: {
     range: "1-20",
     powerMethod: "square",
+    answerType: "mcq",
   },
   setSettings: (data) =>
     set(() => ({

@@ -27,6 +27,7 @@ export const CalculationSetting = () => {
     rangefrom: z.string(),
     rangeto: z.string(),
     operators: z.string(),
+    answerType: z.string(),
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -41,6 +42,7 @@ export const CalculationSetting = () => {
       rangefrom: Number(values.rangefrom),
       rangeto: Number(values.rangeto),
       operators: values.operators,
+      answerType: values.answerType,
     };
     setSettings(newSettings);
     navigate("/calculation-training");
@@ -177,6 +179,29 @@ export const CalculationSetting = () => {
                     <SelectItem value="*/">x /</SelectItem>
                     <SelectItem value="+-*">+ - x</SelectItem>
                     <SelectItem value="+-*/">+ - x /</SelectItem>
+                  </SelectContent>
+                </Select>
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="answerType"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Answer Type</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl className="w-[80vw] lg:w-full">
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select answer type" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="mcq">Multiple Choice</SelectItem>
+                    <SelectItem value="input">Direct Input</SelectItem>
                   </SelectContent>
                 </Select>
               </FormItem>

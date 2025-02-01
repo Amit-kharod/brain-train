@@ -1,13 +1,22 @@
 import { Link } from "react-router-dom";
+import { Button } from "./ui/button";
 
 export const Navbar = () => {
   return (
-    <nav className="p-2 border-b-2">
-      <Link to={"/"}>
-        <h2 className="text-yellow-400 text-2xl font-bold text-center">
-          Brain Train
-        </h2>
+    <div className="flex justify-between items-center p-4 bg-gray-900">
+      <Link to="/">
+        <h1 className="text-2xl font-bold">Math Training</h1>
       </Link>
-    </nav>
+      <div className="flex gap-4">
+        <Link to="/bodmas-calculator">
+          <Button
+            variant="outline"
+            className="bg-transparent text-white hover:text-black"
+          >
+            BODMAS Calculator
+          </Button>
+        </Link>
+      </div>
+    </div>
   );
 };

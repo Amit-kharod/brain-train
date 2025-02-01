@@ -7,6 +7,13 @@ import { Button } from "../ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
 import { Input } from "../ui/input";
 import { useTableSettings } from "../../utils/hooks/useCalculationSettings";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
 
 export const TableSetting = () => {
   // const settings = useTableSettings((state) => state.settings);
@@ -14,6 +21,7 @@ export const TableSetting = () => {
   const formSchema = z.object({
     firstValueRange: z.string(),
     secondValueRange: z.string(),
+    answerType: z.string(),
   });
   const navigate = useNavigate();
 
@@ -26,6 +34,7 @@ export const TableSetting = () => {
     const newSettings = {
       fistValueRange: values.firstValueRange,
       secondValueRange: values.secondValueRange,
+      answerType: values.answerType,
     };
     setSettings(newSettings);
     navigate("/table-training");
@@ -73,6 +82,29 @@ export const TableSetting = () => {
               )}
             />
           </div>
+          <FormField
+            control={form.control}
+            name="answerType"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Answer Type</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl className="w-[80vw] lg:w-[30vw]">
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select answer type" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="mcq">Multiple Choice</SelectItem>
+                    <SelectItem value="input">Direct Input</SelectItem>
+                  </SelectContent>
+                </Select>
+              </FormItem>
+            )}
+          />
           <Button className="bg-red-500 col-span-4 w-full" type="submit">
             Start Training
           </Button>

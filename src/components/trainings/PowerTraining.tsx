@@ -13,16 +13,20 @@ import {
   SelectValue,
 } from "../ui/select";
 import { useEffect, useState } from "react";
+import { useCounter } from "../../utils/hooks/useCounter";
+import { Input } from "../ui/input";
 
 function PowerTraining() {
   const settings = usePowerSettings((state) => state.settings);
-  const { range, powerMethod } = settings;
+  const { range, powerMethod, answerType } = settings;
   const [problems, setProblems] = useState(randomPower(range, powerMethod));
   const [isAnswersCorrect, setIsAnswersCorrect] = useState<any[]>(
     new Array(problems.length)
   );
   const [refresh, setRefresh] = useState(true);
   const [isSubmit, setIsSubmit] = useState(false);
+  const { counter, incrementCounter, resetCounter } = useCounter();
+  const [showSolutions, setShowSolutions] = useState(false);
 
   useEffect(() => {
     isAnswersCorrect?.fill(false);
@@ -34,42 +38,91 @@ function PowerTraining() {
   console.log(isAnswersCorrect);
   console.log(isSubmit);
 
+  const renderAnswerInput = (problem: any, index: number) => {
+    if (answerType === "mcq") {
+      return (
+        <Select
+          onValueChange={(v) => {
+            const temp = [...isAnswersCorrect];
+            temp[index] = problem.answer === Number(v);
+            setIsAnswersCorrect(temp);
+            setIsSubmit(false);
+          }}
+        >
+          <SelectTrigger className="w-[180px]">
+            <SelectValue placeholder="Select your answer" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              {problem.options.map((option: number) => (
+                <SelectItem key={option} value={`${option}`}>
+                  {option}
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+      );
+    }
+
+    return (
+      <Input
+        type="number"
+        className="w-[180px] text-black"
+        placeholder="Enter your answer"
+        onChange={(e) => {
+          const temp = [...isAnswersCorrect];
+          temp[index] = problem.answer === Number(e.target.value);
+          setIsAnswersCorrect(temp);
+          setIsSubmit(false);
+        }}
+      />
+    );
+  };
+
   return (
     <div className="flex flex-col items-center p-8">
-      <Heading>Power Training</Heading>
+      <div className="flex justify-between items-center w-full max-w-xl mb-4">
+        <Heading>Power Training</Heading>
+        <div className="flex items-center gap-2">
+          <span className="text-lg">Set {counter}</span>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={resetCounter}
+            className="bg-transparent text-white hover:text-black"
+          >
+            Reset Counter
+          </Button>
+        </div>
+      </div>
       {refresh && (
         <>
-          <div className="flex my-4">
+          <div className="flex">
             <div className="flex flex-col gap-2">
               {problems.map((problem, i) => {
                 return (
-                  <div key={i} className="flex gap-4">
+                  <div key={i}>
                     <div>
-                      {problem.num}
-                      <sup>{problem.power}</sup>
+                      {problem.isRoot ? (
+                        <>
+                          {problem.power}
+                          {problem.num}
+                        </>
+                      ) : (
+                        <>
+                          {problem.num}
+                          <sup>{problem.power}</sup>
+                        </>
+                      )}
+                      {showSolutions && (
+                        <span className="ml-2 text-green-500">
+                          = {problem.answer}
+                        </span>
+                      )}
                     </div>
                     <div className="flex items-center">
-                      <Select
-                        onValueChange={(v) => {
-                          const temp = [...isAnswersCorrect];
-                          temp[i] = problems[i].answer === Number(v);
-                          setIsAnswersCorrect(temp);
-                          setIsSubmit(false);
-                        }}
-                      >
-                        <SelectTrigger className="w-[180px]">
-                          <SelectValue placeholder="Select your answer" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectGroup>
-                            {problem.options.map((option) => (
-                              <SelectItem value={`${option}`}>
-                                {option}
-                              </SelectItem>
-                            ))}
-                          </SelectGroup>
-                        </SelectContent>
-                      </Select>
+                      {renderAnswerInput(problem, i)}
                       {isSubmit && isAnswersCorrect[i] && (
                         <Check color="#6DD95B" />
                       )}
@@ -87,8 +140,10 @@ function PowerTraining() {
               onClick={() => {
                 setProblems(randomPower(range, powerMethod));
                 setIsSubmit(false);
+                setShowSolutions(false);
                 isAnswersCorrect?.fill(false);
                 setRefresh(false);
+                incrementCounter();
               }}
             >
               <RotateCcw />
@@ -96,6 +151,13 @@ function PowerTraining() {
             </Button>
             <Button className="bg-[#4c913b]" onClick={() => setIsSubmit(true)}>
               Submit
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => setShowSolutions(!showSolutions)}
+              className="bg-transparent text-white hover:text-black"
+            >
+              {showSolutions ? "Hide Solutions" : "Show Solutions"}
             </Button>
           </div>
         </>
